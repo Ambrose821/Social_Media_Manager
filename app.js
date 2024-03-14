@@ -25,7 +25,7 @@ const {page_connect, get_creation_id, post_insta_photo ,get_insta_creation_id_st
 //drumroll please...
 
 const tester = async() =>{
-var creation_id = await post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4','Hello World', "reel")
+var creation_id = await get_creation_id(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4','Hello World', "reel")
 
 
 var status = getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN,  creation_id)
@@ -36,6 +36,8 @@ while(status != "FINISHED"){
     console.log("Checked"+  ++counter)
 }
 console.log("ready")
+await post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,creation_id)
+
 }
 
 // /post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://politicsnigeria.com/wp-content/uploads/2024/02/philip-shaibu.jpg','Hello World',)

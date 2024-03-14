@@ -60,10 +60,10 @@ const getStatusOfUploadContainer = async (accessToken, igContainerId) => {
 
 
 //This is seperate from the creation_id function because i believe i'll need a different procedure for different types of posts EX)videos, reels, stories, etc
-const post_insta_photo = async(insta_id, media_url,caption,content_type) =>{
-    const creation_id = await get_creation_id(insta_id, media_url,caption,content_type)
-    console.log(creation_id);
-    return creation_id
+const post_insta_photo = async(insta_id, creation_id) =>{
+    // const creation_id = await get_creation_id(insta_id, media_url,caption,content_type)
+    // console.log(creation_id);
+    //return creation_id
      const url = `https://graph.facebook.com/v19.0/${insta_id}/media_publish?creation_id=${creation_id}&access_token=${process.env.CURRENT_LONG_TOKEN}`
     const response = await axios.post(url);
     console.log(response.data)
