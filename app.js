@@ -19,18 +19,54 @@ const {page_connect, get_creation_id, post_insta_photo ,get_insta_creation_id_st
 const date_since_starting = require('./utils/dayCounter')
 const daily1_caption = require('./default_captions/captions')
 
-insta_post_reel(process.env.DAILY1_INSTA_ID,'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',daily1_caption(date_since_starting("2024-03-18")),"reel")
+
+
+/*===================Daily1 Beninging======================*/
+ const caption = daily1_caption(date_since_starting('2024-03-19'))
+ //Captions MUST be urlencoded to make sence in the query
+ const encodedCaption = encodeURIComponent(caption);
+ console.log(caption)
+console.log(encodedCaption)
+insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',caption,"reel")
+
+
+
+
+//var creation_id =  post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',encodedCaption, "reel")
+
+    
+    
+
+// const tester = async() =>{
+//     const creation_id = await get_creation_id(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aQEwK8e_460sv.mp4','Hello World', "reel")
+//     console.log(creation_id)
+//     var counter = 0
+//     var status = getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN,  creation_id)
+//     while(status != "FINISHED"){
+//         console.log("Checked"+  ++counter)
+//         status = await getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN,  creation_id)
+//         if(status == "FINISHED"){
+//             break;
+//         }
+        
+//         await new Promise((p) =>setTimeout(p,10000))
+//     }
+//     console.log("ready")
+//     await post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,creation_id)
+    
+//     }
+// tester()
+
 
 //If you need to get the instagram id for env variables look down
 //page_connect(process.env.SHUFFLE_MEDIA_FACEBOOK_ID)
 
 //test getting creation id
-//get_creation_id(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://politicsnigeria.com/wp-content/uploads/2024/02/philip-shaibu.jpg','Edo deputy gov raises alarm, says there are plans to impeach him over controversial PDP primary')
+//get_creation_id(process.env., 'https://politicsnigeria.com/wp-content/uploads/2024/02/philip-shaibu.jpg','Edo deputy gov raises alarm, says there are plans to impeach him over controversial PDP primary')
 
 //drumroll please...
 
-
-// /post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://politicsnigeria.com/wp-content/uploads/2024/02/philip-shaibu.jpg','Hello World',)
+//post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://politicsnigeria.com/wp-content/uploads/2024/02/philip-shaibu.jpg','Hello World',)
 //
 
 //var creation_id =  post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4','Hello World', "reel")

@@ -1,5 +1,7 @@
 const axios = require('axios');
 const { response } = require('express');
+// const date_since_starting = require('./utils/dayCounter')
+// const daily1_caption = require('./default_captions/captions')
 
 //takes a facebook page id and returns the instagram id that is linked to the page
 const page_connect =  async(page_id) =>{
@@ -19,17 +21,19 @@ const page_connect =  async(page_id) =>{
 
 const get_creation_id = async (insta_id, media_url,caption,content_type) =>{
     if(content_type == "reel"){
-        var url =`https://graph.facebook.com/v19.0/${insta_id}/media?media_type=REELS&video_url=${media_url}&caption=${caption}&access_token=${process.env.CURRENT_LONG_TOKEN}`;
+      console.log("At creation Id: " +caption)
+      var url = `https://graph.facebook.com/v19.0/${encodeURIComponent(insta_id)}/media?media_type=REELS&video_url=${encodeURIComponent(media_url)}&caption=${encodeURIComponent(caption)}&access_token=${encodeURIComponent(process.env.CURRENT_LONG_TOKEN)}`;
+
+       
     }
     else{
         var url =`https://graph.facebook.com/v19.0/${insta_id}/media?image_url=${media_url}&caption=${caption}&access_token=${process.env.CURRENT_LONG_TOKEN}`
     }
-
+    console.log("At creation Id: " +caption)
     const response = await axios.post(url)
     //console.log(response.data)
     const creation_id = response.data.id;
-    //console.log(creation_id);
-    //console.log(typeof creation_id);
+    console.log("At creation ID: " + JSON.stringify(response.data))
     return creation_id;
 
 }   
@@ -60,11 +64,11 @@ const getStatusOfUploadContainer = async (accessToken, igContainerId) => {
 
 
 //This is seperate from the creation_id function because i believe i'll need a different procedure for different types of posts EX)videos, reels, stories, etc
-const post_insta_photo = async(insta_id, creation_id) =>{
-    // const creation_id = await get_creation_id(insta_id, media_url,caption,content_type)
-    // console.log(creation_id);
+const post_insta_photo = async(insta_id, media_url,caption,content_type) =>{
+   const creation_id = await get_creation_id(insta_id, media_url,caption,content_type)
+    console.log(creation_id);
     //return creation_id
-     const url = `https://graph.facebook.com/v19.0/${insta_id}/media_publish?creation_id=${creation_id}&access_token=${process.env.CURRENT_LONG_TOKEN}`
+    const url = `https://graph.facebook.com/v19.0/${insta_id}/media_publish?creation_id=${creation_id}&access_token=${process.env.CURRENT_LONG_TOKEN}`
     const response = await axios.post(url);
     console.log(response.data)
 
@@ -74,12 +78,17 @@ const post_insta_photo = async(insta_id, creation_id) =>{
 
 //TODO Need better logic for while loop becaue we use too many requests
 const insta_post_reel = async(insta_id, media_url, captions, content_type) =>{
-    var creation_id = await get_creation_id(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, media_url,"hello", content_type)
+    var creation_id = await get_creation_id(insta_id, media_url,captions, content_type)
+    console.log("creation_id"+creation_id)
     
-    
-    var status = getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN,  creation_id)
+    var status = null
     var counter =0
+    var start_time = Date.now()
+
     while(status != "FINISHED"){
+      if(Date.now()-start_time >(1000*60*2)){
+        return console.error("Upload aborted. Took longer than 2 minutes")
+      }
         
         status =  await getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN, creation_id);
         console.log("Checked"+  ++counter)
@@ -91,9 +100,16 @@ const insta_post_reel = async(insta_id, media_url, captions, content_type) =>{
         await new Promise((p) =>setTimeout(p,10000))
     }
     console.log("ready")
-    await post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,creation_id)
+    await generic_insta_post(insta_id,creation_id)
     
     }
+  
+const generic_insta_post = async(insta_id,creation_id) =>{
+  const url = `https://graph.facebook.com/v19.0/${insta_id}/media_publish?creation_id=${creation_id}&access_token=${process.env.CURRENT_LONG_TOKEN}`
+  const response = await axios.post(url);
+  console.log(response.data)
+
+}
 
     //Not currently userd. using get_creation_id instead
 const uploadReelsToContainer = async (
