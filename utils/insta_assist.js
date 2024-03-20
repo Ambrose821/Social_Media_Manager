@@ -36,6 +36,8 @@ const get_creation_id = async (insta_id, media_url,caption,content_type) =>{
     console.log("At creation ID: " + JSON.stringify(response.data))
     return creation_id;
 
+    
+
 }   
 
 const get_insta_creation_id_status = async (creation_id) => {
