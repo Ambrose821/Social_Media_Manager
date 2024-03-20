@@ -24,6 +24,8 @@ const get_creation_id = async (insta_id, media_url,caption,content_type) =>{
       console.log("At creation Id: " +caption)
       var url = `https://graph.facebook.com/v19.0/${encodeURIComponent(insta_id)}/media?media_type=REELS&video_url=${encodeURIComponent(media_url)}&caption=${encodeURIComponent(caption)}&access_token=${encodeURIComponent(process.env.CURRENT_LONG_TOKEN)}`;
 
+
+  
        
     }
     else{

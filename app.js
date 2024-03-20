@@ -23,14 +23,17 @@ const daily1_caption = require('./default_captions/captions')
 
 
 /*===================Daily1 Beninging======================*/
+const daily1 = async() =>{
  const caption = daily1_caption(date_since_starting('2024-03-19'))
  //Captions MUST be urlencoded to make sence in the query
  const encodedCaption = encodeURIComponent(caption);
  console.log(caption)
 console.log(encodedCaption)
-insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',caption,"reel")
+insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/daily1.mp4',caption,"reel")
+}
 
-
+daily1();
+setInterval(daily1,1000*60*60*24);
 
 
 
