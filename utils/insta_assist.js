@@ -9,11 +9,11 @@ const page_connect =  async(page_id) =>{
        const response = await axios.get(url)
        //console.log(response.data)
        const insta_id = response.data.instagram_business_account.id;
-      //console.log(insta_id);
+      console.log(insta_id);
        return insta_id;
         
     }catch(err){
-   
+        console.log(err)
     }
    }
 
@@ -71,6 +71,31 @@ const post_insta_photo = async(insta_id, creation_id) =>{
 }
 
 
+
+//TODO Need better logic for while loop becaue we use too many requests
+const insta_post_reel = async(insta_id, media_url, captions, content_type) =>{
+    var creation_id = await get_creation_id(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, media_url,"hello", content_type)
+    
+    
+    var status = getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN,  creation_id)
+    var counter =0
+    while(status != "FINISHED"){
+        
+        status =  await getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN, creation_id);
+        console.log("Checked"+  ++counter)
+        if(status == "FINISHED"){
+          break;
+        }
+    
+        
+        await new Promise((p) =>setTimeout(p,10000))
+    }
+    console.log("ready")
+    await post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,creation_id)
+    
+    }
+
+    //Not currently userd. using get_creation_id instead
 const uploadReelsToContainer = async (
     accessToken,
     instagramAccountId,
@@ -93,4 +118,4 @@ const uploadReelsToContainer = async (
   };
 //url: https://politicsnigeria.com/wp-content/uploads/2024/02/philip-shaibu.jpg
 //caption "Edo deputy gov raises alarm, says there are plans to impeach him over controversial PDP primary"
-module.exports = {page_connect, get_creation_id, post_insta_photo,get_insta_creation_id_status, uploadReelsToContainer, getStatusOfUploadContainer };
+module.exports = {page_connect, get_creation_id, post_insta_photo,get_insta_creation_id_status, uploadReelsToContainer, getStatusOfUploadContainer, insta_post_reel};
