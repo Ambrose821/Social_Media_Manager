@@ -90,8 +90,8 @@ const insta_post_reel = async(insta_id, media_url, captions, content_type) =>{
     var start_time = Date.now()
 
     while(status != "FINISHED"){
-      if(Date.now()-start_time >(1000*60*2)){
-        return console.error("Upload aborted. Took longer than 2 minutes")
+      if(Date.now()-start_time >(1000*60*10)){
+        return console.error("Upload aborted. Took longer than 5 minutes")
       }
         
         status =  await getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN, creation_id);
