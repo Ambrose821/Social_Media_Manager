@@ -9,7 +9,7 @@ const sixty_graph_key = async (short_token) => {
        
         const response = await axios.get(url)
         
-    //console.log(response.data.access_token)
+    console.log(response.data.access_token)
     return({token: response.data.access_token, timer: response.data.expires_in})
     
     }

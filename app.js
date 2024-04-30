@@ -9,8 +9,8 @@ dotenv.config({path: './config/config.env'})
 const PORT = process.env.PORT || 5000;
 
 //if you need a new 60 day API instagram graph access key
-const sixty_graph_key = require('./config/insta_access')
-//const key_and_timer = sixty_graph_key(process.env.SHORT_GRAPH_API_KEY)
+//const sixty_graph_key = require('./config/insta_access')
+// const key_and_timer = sixty_graph_key(process.env.SHORT_GRAPH_API_KEY)
 // use settimeout to notify me when the key is gonna expire
 
 
@@ -18,6 +18,9 @@ const {page_connect, get_creation_id, post_insta_photo ,get_insta_creation_id_st
 
 const date_since_starting = require('./utils/dayCounter')
 const daily1_caption = require('./default_captions/captions')
+const get_media = require('./utils/get_media')
+
+
 
 
 
@@ -32,8 +35,8 @@ console.log(encodedCaption)
 insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/daily1.mp4',caption,"reel")
 }
 
-daily1();
-setInterval(daily1,1000*60*60*24);
+//daily1();
+//setInterval(daily1,1000*60*60*24);
 
 
 
@@ -79,6 +82,8 @@ setInterval(daily1,1000*60*60*24);
 
 //get_insta_creation_id_status(creation_id)
 const app = new express()
+
+get_media("culture",10)
 
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
