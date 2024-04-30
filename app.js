@@ -28,7 +28,7 @@ const get_media = require('./utils/get_media')
 /*===================Daily1 Beninging======================*/
 const daily1 = async() =>{
  const caption = daily1_caption(date_since_starting('2024-03-19'))
- //Captions MUST be urlencoded to make sence in the query
+ //Captions MUST be urlencoded to make sense in the query
  const encodedCaption = encodeURIComponent(caption);
  console.log(caption)
 console.log(encodedCaption)

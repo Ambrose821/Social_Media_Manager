@@ -19,7 +19,7 @@ const page_connect =  async(page_id) =>{
     }
    }
 
-const get_creation_id = async (insta_id, media_url,caption,content_type) =>{
+const get_creation_id = async (insta_id, media_url,caption,content_type ="") =>{
     if(content_type == "reel"){
       console.log("At creation Id: " +caption)
       var url = `https://graph.facebook.com/v19.0/${encodeURIComponent(insta_id)}/media?media_type=REELS&video_url=${encodeURIComponent(media_url)}&caption=${encodeURIComponent(caption)}&access_token=${encodeURIComponent(process.env.CURRENT_LONG_TOKEN)}`;
@@ -41,7 +41,7 @@ const get_creation_id = async (insta_id, media_url,caption,content_type) =>{
     
 
 }   
-
+//Dont use this, use getStatusOfUploadContainer
 const get_insta_creation_id_status = async (creation_id) => {
     try{
         const url = `https://graph.facebook.com/v19.0/${creation_id}?fields=status_code,status&access_token=${process.env.CURRENT_LONG_TOKEN}`
@@ -69,7 +69,7 @@ const getStatusOfUploadContainer = async (accessToken, igContainerId) => {
 
 //This is seperate from the creation_id function because i believe i'll need a different procedure for different types of posts EX)videos, reels, stories, etc
 const post_insta_photo = async(insta_id, media_url,caption,content_type) =>{
-   const creation_id = await get_creation_id(insta_id, media_url,caption,content_type)
+   const creation_id = await get_creation_id(insta_id, media_url,caption,"")
     console.log(creation_id);
     //return creation_id
     const url = `https://graph.facebook.com/v19.0/${insta_id}/media_publish?creation_id=${creation_id}&access_token=${process.env.CURRENT_LONG_TOKEN}`
@@ -81,8 +81,11 @@ const post_insta_photo = async(insta_id, media_url,caption,content_type) =>{
 
 
 //TODO Need better logic for while loop becaue we use too many requests
-const insta_post_reel = async(insta_id, media_url, captions, content_type) =>{
-    var creation_id = await get_creation_id(insta_id, media_url,captions, content_type)
+const insta_post_reel = async(insta_id, media_url, captions, content_type,creation_id ="") =>{
+
+  if(!creation_id){
+    creation_id = await get_creation_id(insta_id, media_url,captions, content_type)
+  }
     console.log("creation_id"+creation_id)
     
     var status = null
@@ -107,6 +110,8 @@ const insta_post_reel = async(insta_id, media_url, captions, content_type) =>{
     await generic_insta_post(insta_id,creation_id)
     
     }
+
+
   
 const generic_insta_post = async(insta_id,creation_id) =>{
   const url = `https://graph.facebook.com/v19.0/${insta_id}/media_publish?creation_id=${creation_id}&access_token=${process.env.CURRENT_LONG_TOKEN}`
