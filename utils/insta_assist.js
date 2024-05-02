@@ -81,11 +81,17 @@ const post_insta_photo = async(insta_id, media_url,caption,content_type) =>{
 
 
 //TODO Need better logic for while loop becaue we use too many requests
-const insta_post_reel = async(insta_id, media_url, captions, content_type,creation_id ="") =>{
+const insta_post_reel = async(insta_id, media_url="", captions="", content_type="",creation_id ="") =>{
+
+
 
   if(!creation_id){
+    if(!insta_id || !media_url || !captions || !content_type){
+      return(console.log("Incorrect Argument option. \n If you do not have creation id you must have all other arguments.\n Instagram ID is required in every case"))
+    }
     creation_id = await get_creation_id(insta_id, media_url,captions, content_type)
   }
+
     console.log("creation_id"+creation_id)
     
     var status = null
@@ -93,31 +99,44 @@ const insta_post_reel = async(insta_id, media_url, captions, content_type,creati
     var start_time = Date.now()
 
     while(status != "FINISHED"){
-      if(Date.now()-start_time >(1000*60*10)){
+      if(Date.now()-start_time > (1000*60*10)){
         return console.error("Upload aborted. Took longer than 5 minutes")
       }
         
         status =  await getStatusOfUploadContainer(process.env.CURRENT_LONG_TOKEN, creation_id);
         console.log("Checked"+  ++counter)
         if(status == "FINISHED"){
+          console.log("ready")
+          await generic_insta_post(insta_id,creation_id)
           break;
         }
     
         
         await new Promise((p) =>setTimeout(p,10000))
     }
-    console.log("ready")
-    await generic_insta_post(insta_id,creation_id)
+    
+    
+    
+
     
     }
 
 
   
 const generic_insta_post = async(insta_id,creation_id) =>{
+  return new Promise(async (resolve, reject) =>{
+
+   try{ 
   const url = `https://graph.facebook.com/v19.0/${insta_id}/media_publish?creation_id=${creation_id}&access_token=${process.env.CURRENT_LONG_TOKEN}`
   const response = await axios.post(url);
-  console.log(response.data)
+  console.log("Generic Post Success: "+ JSON.stringify(response.data))
+  resolve()
+   }catch(err){
+    console.error("Genereic Posting Error");
+    reject(err)
 
+   }
+  })  
 }
 
     //Not currently userd. using get_creation_id instead

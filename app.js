@@ -18,7 +18,7 @@ const {page_connect, get_creation_id, post_insta_photo ,get_insta_creation_id_st
 
 const date_since_starting = require('./utils/dayCounter')
 const daily1_caption = require('./default_captions/captions')
-const get_media = require('./utils/get_media')
+
 
 
 
@@ -34,9 +34,14 @@ const daily1 = async() =>{
 console.log(encodedCaption)
 insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/daily1.mp4',caption,"reel")
 }
-
 //daily1();
 //setInterval(daily1,1000*60*60*24);
+
+//Connection to Media API
+const {get_media,get_and_insta_post} = require('./utils/get_media')
+//Post 3 things
+get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",10);
+
 
 
 
@@ -83,7 +88,7 @@ insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-producti
 //get_insta_creation_id_status(creation_id)
 const app = new express()
 
-get_media("culture",10)
+
 
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
