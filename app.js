@@ -40,9 +40,13 @@ insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-producti
 //Connection to Media API
 const {get_media,get_and_insta_post} = require('./utils/get_media')
 //Post 3 things
-get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",10);
+//get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",10);
 
 
+const {createInstagramImage, edit_image} = require('./utils/photo_editor');
+// Replace 'your-image-url' with the actual URL of the image you want to use
+//createInstagramImage("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg");
+edit_image();
 
 
 //var creation_id =  post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',encodedCaption, "reel")
