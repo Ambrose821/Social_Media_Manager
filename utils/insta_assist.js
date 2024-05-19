@@ -84,7 +84,7 @@ const post_insta_photo = async(insta_id, media_url,caption,content_type) =>{
 const insta_post_reel = async(insta_id, media_url="", captions="", content_type="",creation_id ="") =>{
 
 
-
+  try{
   if(!creation_id){
     if(!insta_id || !media_url || !captions || !content_type){
       return(console.log("Incorrect Argument option. \n If you do not have creation id you must have all other arguments.\n Instagram ID is required in every case"))
@@ -119,7 +119,11 @@ const insta_post_reel = async(insta_id, media_url="", captions="", content_type=
     
 
     
+    }catch(err){
+
+      console.log("Error Posting Reel +:  "+ err)
     }
+}
 
 
   

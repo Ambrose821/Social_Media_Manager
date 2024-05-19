@@ -1,6 +1,6 @@
 const axios = require('axios')
 const InstaAccount = require('../models/InstaAccount')
-
+const {edit_image} = require("./photo_editor")
 
 
 const {get_creation_id, post_insta_photo, getStatusOfUploadContainer, insta_post_reel} = require('../utils/insta_assist')
@@ -65,7 +65,9 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
        const encodedCaption = encodeURIComponent(plane_caption);
       
         if(!post.video_url){
-           // post_insta_photo(insta_id,post.img_url,encodedCaption)
+            const edited_img = await edit_image(post.img_url,post.title)
+            console.log(edited_img + " "  + post.img_url)
+           //post_insta_photo(insta_id,edited_img,encodedCaption)
            this_account.content_posted.push(post._id); //Register content posted by this account
            await this_account.save();
            continue;

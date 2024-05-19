@@ -59,12 +59,13 @@ async function createInstagramImage(imageUrl) {
 
 
 
-const edit_image = async () =>{
-const image = await cloudinary.uploader.upload("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg",
-  { public_id: "olympic_flag2"} );
+const edit_image = async (img_url, img_text) =>{
+try{
+const image = await cloudinary.uploader.upload(img_url,
+  { public_id: img_text} );
 
   const publicId = image.public_id;
-  const text = "hello World"
+  const text = img_text
   const encodedText = encodeURIComponent(text);
   let imageUrl = cloudinary.url(publicId, {
     transformation: [
@@ -74,17 +75,30 @@ const image = await cloudinary.uploader.upload("https://upload.wikimedia.org/wik
        
       },
       {
-        overlay: `text:Arial_40_bold:${encodedText}`, // Text overlay
+        overlay: `text:Impact_60:${encodedText}`, // black shadow as text overlay
+        gravity: "south",
+        y: 120, // Slightly offset for shadow effect
+        color: "black", // Red color for the shadow
+        width: 1000,
+        crop: "fit"
+      },
+      {
+        overlay: `text:Impact_60:${encodedText}`, // Text overlay
         gravity: "south",
         y: 125,
         color: "white",
         width: 1000, // Ensuring the text fits within the image width
-        crop: "fit" // Fit the text within the specified width
+        crop: "fit", // Fit the text within the specified width   
+         
     }
     ]
   });
   
   console.log(imageUrl);
+  return imageUrl;
+  }catch(err){
+    console.error("Error Editin Photo: "+err )
+  }
   
 
 

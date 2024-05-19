@@ -49,7 +49,7 @@ const {get_media,get_and_insta_post} = require('./utils/get_media')
 const {createInstagramImage, edit_image} = require('./utils/photo_editor');
 // Replace 'your-image-url' with the actual URL of the image you want to use
 //createInstagramImage("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg");
-// edit_image();
+//edit_image('https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg', "Hello World00000000000000000000000000");
 
 
 //var creation_id =  post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',encodedCaption, "reel")
@@ -96,13 +96,14 @@ const {createInstagramImage, edit_image} = require('./utils/photo_editor');
 const app = new express()
 
 //connect to Mongo
-connectDB();
+//connectDB();
 
-const add_insta_account = require('./utils/add_account');
+//const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"Shuffle Media")
-//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",3);
+//et_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"sportsIO",3);
 
+// !!!!!!!!!!!! TODO SOME PICTURES RESULT IN FAILED EDIT WHICH RESULTS IN A FAILED POST. sPECIFICALLY WITH SPORTS I0 SO FAR
 
  
 
