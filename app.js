@@ -2,8 +2,12 @@ const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path')
 
+const connectDB = require('./config/connectDb');
+
 //Allows use of process.env.{variable_name}
 dotenv.config({path: './config/config.env'})
+
+
 
 //port
 const PORT = process.env.PORT || 5000;
@@ -18,7 +22,6 @@ const {page_connect, get_creation_id, post_insta_photo ,get_insta_creation_id_st
 
 const date_since_starting = require('./utils/dayCounter')
 const daily1_caption = require('./default_captions/captions')
-
 
 
 
@@ -46,7 +49,7 @@ const {get_media,get_and_insta_post} = require('./utils/get_media')
 const {createInstagramImage, edit_image} = require('./utils/photo_editor');
 // Replace 'your-image-url' with the actual URL of the image you want to use
 //createInstagramImage("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg");
-edit_image();
+// edit_image();
 
 
 //var creation_id =  post_insta_photo(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, 'https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',encodedCaption, "reel")
@@ -91,6 +94,16 @@ edit_image();
 
 //get_insta_creation_id_status(creation_id)
 const app = new express()
+
+//connect to Mongo
+connectDB();
+
+const add_insta_account = require('./utils/add_account');
+
+//add_insta_account(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"Shuffle Media")
+get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",3);
+
+
 
 
 
