@@ -9,19 +9,21 @@ const captions = {
     "culture": "\n.\n.\n.\n.\n #funny #viral #fyp #humour #memes"
 }
 
-const get_media = async (genre, quantity)=>{
+const get_media = async (genre, quantity, excludeIds =""/*Content to avoid*/ )=>{
 
     try{
-    const response = await axios.get(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}`)   
-   console.log(typeof response.data.media[0]._id);
-    return response.data.media;
+    var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}`,{excludeIds});   
+   //console.log(typeof response.data.media[0]._id);
+   console.log(response.data.message)
+   return response.data.media;
 
     }
 
    
 
     catch(err){
-        console.err("Error getting media: " + err)
+        console.error("Error getting media: " + err)
+       // console.log(JSON.stringify(response))
     }
 }
 
@@ -33,8 +35,9 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
     try{
 
         var this_account = await InstaAccount.findOne({instagram_id:insta_id});
-        console.log(this_account);
 
+        console.log(this_account.content_posted);
+        var excludeIds = this_account.content_posted;
         
 
 
@@ -51,7 +54,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
     }
     
         
-    const media_arr = await get_media(genre,quantity);
+    const media_arr = await get_media(genre,quantity,excludeIds);
     console.log(media_arr)
     
 

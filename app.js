@@ -101,10 +101,10 @@ connectDB();
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"Shuffle Media")
-get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",3);
+//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",3);
 
 
-
+ 
 
 
 
