@@ -30,6 +30,7 @@ const get_media = async (genre, quantity, excludeIds =""/*Content to avoid*/ )=>
 
 // TODO: This is currently only set up for posts with small captions. memes and reels, etc. will need to impplement longer captions for news and current events
 // TODO: This is HORRIBLY structured. Fix please
+//TODO: Edit images depending on genre. For news and sports it makes sense to add caption to image. does not work for memes or culture as there is already text
 const get_and_insta_post = async(insta_id,genre,quantity) =>{
 
     try{
@@ -65,9 +66,9 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
        const encodedCaption = encodeURIComponent(plane_caption);
       
         if(!post.video_url){
-            const edited_img = await edit_image(post.img_url,post.title)
-            console.log(edited_img + " "  + post.img_url)
-           //post_insta_photo(insta_id,edited_img,encodedCaption)
+            // const edited_img = await edit_image(post.img_url,post.title) not yet
+            // console.log(edited_img + " "  + post.img_url)
+           post_insta_photo(insta_id,post.img_url,encodedCaption)
            this_account.content_posted.push(post._id); //Register content posted by this account
            await this_account.save();
            continue;
@@ -78,9 +79,11 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
             this_account.content_posted.push(post._id); //Register content posted by this account
             await this_account.save();
         }
+        
 
     }catch(err){
         console.error("Problem in loop from  get_and_insta_post\n ERROR: "+err)
+        continue;
     }
     }
 
@@ -94,7 +97,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
             creation_id_to_post = container_queue.pop()
             console.log("Dequeued: " + creation_id_to_post)
             console.log("i = : " +i)
-            //await insta_post_reel(insta_id,"","","",creation_id_to_post)
+            await insta_post_reel(insta_id,"","","",creation_id_to_post)
 
             
         }

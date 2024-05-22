@@ -30,15 +30,15 @@ const daily1_caption = require('./default_captions/captions')
 
 /*===================Daily1 Beninging======================*/
 const daily1 = async() =>{
- const caption = daily1_caption(date_since_starting('2024-03-19'))
+ const caption = daily1_caption(date_since_starting('2024-05-21'))
  //Captions MUST be urlencoded to make sense in the query
  const encodedCaption = encodeURIComponent(caption);
  console.log(caption)
 console.log(encodedCaption)
 insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/daily1.mp4',caption,"reel")
 }
-//daily1();
-//setInterval(daily1,1000*60*60*24);
+daily1();
+setInterval(daily1,1000*60*60*24);
 
 //Connection to Media API
 const {get_media,get_and_insta_post} = require('./utils/get_media')
@@ -46,7 +46,7 @@ const {get_media,get_and_insta_post} = require('./utils/get_media')
 //get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",10);
 
 
-const {createInstagramImage, edit_image} = require('./utils/photo_editor');
+const {createInstagramImage, edit_image, fix_reddit_video_url} = require('./utils/photo_editor');
 // Replace 'your-image-url' with the actual URL of the image you want to use
 //createInstagramImage("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg");
 //edit_image('https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg', "Hello World00000000000000000000000000");
@@ -96,18 +96,20 @@ const {createInstagramImage, edit_image} = require('./utils/photo_editor');
 const app = new express()
 
 //connect to Mongo
-//connectDB();
+connectDB();
 
-//const add_insta_account = require('./utils/add_account');
+const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"Shuffle Media")
-//et_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"sportsIO",3);
+get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",10);
+
+setInterval(get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",10),1000*60*60*24);
 
 // !!!!!!!!!!!! TODO SOME PICTURES RESULT IN FAILED EDIT WHICH RESULTS IN A FAILED POST. sPECIFICALLY WITH SPORTS I0 SO FAR
 
- 
+//insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://v.redd.it/9fmcl86ovd1d1/DASH_480.mp4',"hello world", "reel")
 
-
+//fix_reddit_video_url("https://v.redd.it/khrp0i1crgxc1/DASH_720.mp4","hello world")
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
 
@@ -119,4 +121,5 @@ app.use(express.urlencoded({extended:false}))
 app.use(express.json);
 
 app.listen(PORT,console.log(`Server running on ${process.env.PORT}`))
+
 
