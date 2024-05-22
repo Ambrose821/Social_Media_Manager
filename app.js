@@ -37,7 +37,7 @@ const daily1 = async() =>{
 console.log(encodedCaption)
 insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/daily1.mp4',caption,"reel")
 }
-daily1();
+//daily1();
 setInterval(daily1,1000*60*60*24);
 
 //Connection to Media API
@@ -101,17 +101,25 @@ connectDB();
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"Shuffle Media")
-get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",10);
-
+//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"memes",10);
+try{
 setInterval(() => {
     get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 10);
 }, 1000 * 60 * 60 * 24); 
+setInterval(() => {
+    get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "memes", 10);
+}, 1000 * 60 * 60 * 24); 
+}catch(err){
+
+    console.error("Error with some setIntervals: " +err + "\n JSON: "+ JSON.stringify(err));
+}
 
 // !!!!!!!!!!!! TODO SOME PICTURES RESULT IN FAILED EDIT WHICH RESULTS IN A FAILED POST. sPECIFICALLY WITH SPORTS I0 SO FAR
 
-//insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://v.redd.it/9fmcl86ovd1d1/DASH_480.mp4',"hello world", "reel")
+//insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://res.cloudinary.com/dniqtkfhi/video/upload/l_audio:8%20year%20old%20girl%20in%20UK%20is%20pissed%20off%20at%20the%20cost%20of%20ice%20cream_audio/fl_layer_apply/8%20year%20old%20girl%20in%20UK%20is%20pissed%20off%20at%20the%20cost%20of%20ice%20cream?_a=BAMADKa20',"hello world", "reel")
 
-//fix_reddit_video_url("https://v.redd.it/khrp0i1crgxc1/DASH_720.mp4","hello world")
+
+//const urls = fix_reddit_video_url("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback","hello world")
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
 

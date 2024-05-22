@@ -3,7 +3,7 @@ const funny_below_tags = "\n.\n.\n.\n.\n.\n #fyp #funny #funnymemes #funnyvideos
 
 const daily1_caption = (date_since_starting) =>{
 
-    const caption = `Day ${date_since_starting} 🌞 \n ROAD TO 1K!🎉 ${funny_below_tags}`
+    const caption = `Day ${date_since_starting} 🌞 ROAD TO 1K!🎉 ${funny_below_tags}`
     return caption;
 
 }

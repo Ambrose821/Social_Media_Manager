@@ -103,11 +103,26 @@ const image = await cloudinary.uploader.upload(img_url,
 
 
 
+
+}
+
+const fix_reddit_photo_url = async(bad_url, title) =>{
+  try{
+    const upload_image = await cloudinary.uploader.upload(bad_url,{public_id: title, transformation: [
+      { width: 1080, height: 1080, crop: "fill" }
+  ]})
+    console.log("Fixed Reddit Photo:  " + upload_image.url)
+    return upload_image.url;
+
+  }catch(err){
+    console.error("Error in fix_reddit_photo_url(): " +err);
+    return null;
+
+  }
+
 }
 
 const fix_reddit_video_url = async(bad_url,title) =>{
-
-
 
   try{
    //get the audio for the video
@@ -134,23 +149,38 @@ const fix_reddit_video_url = async(bad_url,title) =>{
     console.log("Audio " + audio_url)
 
     const mergedVideoUrl = cloudinary.url(video_upload.public_id, {
+
       resource_type: 'video',
+      
       transformation: [
-        { overlay: audio_id, resource_type: 'video', flags: "splice" }
+      
+      { overlay: `audio:${audio_id}` },
+      
+      { flags: "layer_apply" }
+      
       ]
-    });
+      
+      });
+      
+      
+   
+
+    // const mergedVideoUrl = cloudinary.url(video_upload.public_id, {
+    //   resource_type: 'video',
+    //   transformation: [
+    //     { overlay: audio_id, resource_type: 'video', flags: "splice" }
+    //   ]
+    // });
 
 
-    console.log('Merged Video URL:', mergedVideoUrl);
+      console.log('merged: '+ mergedVideoUrl)
 
-
-
-
+      return mergedVideoUrl;
     
 
   }catch(err){
-    console.error("Error in fix_reddit_video_url(): " + err)
+    console.error("Error in fix_reddit_video_url(): " + JSON.stringify(err)+ "\nRegular error: " + err)
   }
 
 }
-module.exports =  {createInstagramImage, edit_image, fix_reddit_video_url};
+module.exports =  {createInstagramImage, edit_image, fix_reddit_video_url,fix_reddit_photo_url};

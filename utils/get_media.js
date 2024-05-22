@@ -1,12 +1,14 @@
 const axios = require('axios')
 const InstaAccount = require('../models/InstaAccount')
-const {edit_image} = require("./photo_editor")
+const {edit_image,fix_reddit_video_url,fix_reddit_photo_url} = require("./photo_editor")
+
 
 
 const {get_creation_id, post_insta_photo, getStatusOfUploadContainer, insta_post_reel} = require('../utils/insta_assist')
 
 const captions = {
-    "culture": "\n.\n.\n.\n.\n #funny #viral #fyp #humour #memes"
+    "culture": "\nFOLLOW FOR DAILY CONTENT🎉 \nROAD TO 1K📈 \n.\n.\n.\n.\n #funny #viral #fyp #humour #memes,#daily",
+    "memes": "\nFOLLOW FOR DAILY CONTENT🎉 \nROAD TO 1K📈\n.\n.\n.\n #funny #viral #fyp #humour #memes #viral #daily"
 }
 
 const get_media = async (genre, quantity, excludeIds =""/*Content to avoid*/ )=>{
@@ -52,6 +54,9 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
     switch (genre){
         case "culture":
             underCaption = captions.culture
+            break;
+        case "memes":
+            underCaption = captions.memes
     }
     
         
@@ -65,19 +70,34 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
        let plane_caption = post.title + underCaption;
        const encodedCaption = encodeURIComponent(plane_caption);
       
-        if(!post.video_url){
-            // const edited_img = await edit_image(post.img_url,post.title) not yet
-            // console.log(edited_img + " "  + post.img_url)
-           post_insta_photo(insta_id,post.img_url,encodedCaption)
+        if(!post.video_url && post.img_url){
+           var image_url;
+           if(genre === 'memes'){
+            image_url = await fix_reddit_photo_url(post.img_url,post._id);
+            console.log("memes photo")
+
+           }
+           else{
+            image_url = post.img_url;
+           }
+           post_insta_photo(insta_id,image_url,encodedCaption)
            this_account.content_posted.push(post._id); //Register content posted by this account
            await this_account.save();
            continue;
         }else if(post.video_url){
-            const creation_id_to_enqueue = await get_creation_id(insta_id,post.video_url,plane_caption,"reel")
+            var video_url;
+            if(genre === 'memes'){
+                video_url = await fix_reddit_video_url(post.video_url,post.title._id); //Reddit urls are missing sound and not compatible with meta grpah api by default. this function fixes that.
+                console.log("memes video")
+            }
+            else{video_url = post.video_url}
+            const creation_id_to_enqueue = await get_creation_id(insta_id,video_url,plane_caption,"reel")
             container_queue.unshift(creation_id_to_enqueue)
             console.log("Reel enqueued: " + creation_id_to_enqueue )
             this_account.content_posted.push(post._id); //Register content posted by this account
             await this_account.save();
+        }else{
+            continue;
         }
         
 

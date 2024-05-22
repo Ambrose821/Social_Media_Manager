@@ -113,6 +113,11 @@ const insta_post_reel = async(insta_id, media_url="", captions="", content_type=
           await generic_insta_post(insta_id,creation_id)
           break;
         }
+
+        if(status == "ERROR"){
+          console.log("Error in container, skipping: ")
+          break;
+        }
     
         
         await new Promise((p) =>setTimeout(p,10000))
