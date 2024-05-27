@@ -1,11 +1,15 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const path = require('path')
+const schedule = require('node-schedule')
 
 const connectDB = require('./config/connectDb');
 
+
 //Allows use of process.env.{variable_name}
-dotenv.config({path: './config/config.env'})
+dotenv.config({path: './config/config.env'}
+)
+
 
 
 
@@ -38,7 +42,7 @@ console.log(encodedCaption)
 insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/daily1.mp4',caption,"reel")
 }
 //daily1();
-setInterval(daily1,1000*60*60*24);
+//qsetInterval(daily1,1000*60*60*24);
 
 //Connection to Media API
 const {get_media,get_and_insta_post} = require('./utils/get_media')
@@ -46,7 +50,7 @@ const {get_media,get_and_insta_post} = require('./utils/get_media')
 //get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",10);
 
 
-const {createInstagramImage, edit_image, fix_reddit_video_url} = require('./utils/photo_editor');
+const {createInstagramImage, edit_image, fix_reddit_video_url,cloudinary_video_upload} = require('./utils/photo_editor');
 // Replace 'your-image-url' with the actual URL of the image you want to use
 //createInstagramImage("https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg");
 //edit_image('https://upload.wikimedia.org/wikipedia/commons/a/ae/Olympic_flag.jpg', "Hello World00000000000000000000000000");
@@ -103,12 +107,13 @@ const add_insta_account = require('./utils/add_account');
 //add_insta_account(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"Shuffle Media")
 //get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"memes",10);
 try{
-setInterval(() => {
-    get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 10);
-}, 1000 * 60 * 60 * 24); 
-setInterval(() => {
-    get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "memes", 10);
-}, 1000 * 60 * 60 * 24); 
+
+const job = schedule.scheduleJob('0 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
+const job1 = schedule.scheduleJob('0 12 * * *',   ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "memes", 5)})
+const job2 = schedule.scheduleJob('0 5 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "cringe", 5)})
+
+const dailyJob = schedule.scheduleJob('0 12 * * *',()=>{daily1()})
+ 
 }catch(err){
 
     console.error("Error with some setIntervals: " +err + "\n JSON: "+ JSON.stringify(err));
@@ -120,6 +125,8 @@ setInterval(() => {
 
 
 //const urls = fix_reddit_video_url("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback","hello world")
+
+//cloudinary_video_upload('https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',"hello")
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
 

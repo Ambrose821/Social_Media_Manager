@@ -7,14 +7,36 @@ const {edit_image,fix_reddit_video_url,fix_reddit_photo_url} = require("./photo_
 const {get_creation_id, post_insta_photo, getStatusOfUploadContainer, insta_post_reel} = require('../utils/insta_assist')
 
 const captions = {
-    "culture": "\nFOLLOW FOR DAILY CONTENT🎉 \nROAD TO 1K📈 \n.\n.\n.\n.\n #funny #viral #fyp #humour #memes,#daily",
-    "memes": "\nFOLLOW FOR DAILY CONTENT🎉 \nROAD TO 1K📈\n.\n.\n.\n #funny #viral #fyp #humour #memes #viral #daily"
+    "culture": `\nFOLLOW FOR DAILY CONTENT🎉 \nROAD TO 1K📈\n No problem! Here’s the information about the Mercedes CLR GTR:\n
+    The Mercedes CLR GTR is a remarkable racing car celebrated for its outstanding performance and sleek design. Powered by a potent 6.0-liter V12 engine, it delivers over 600 horsepower.\n
+    Acceleration from 0 to 100 km/h takes approximately 3.7 seconds, with a remarkable top speed surpassing 320 km/h.\n
+    Incorporating advanced aerodynamic features and cutting-edge stability technologies, the CLR GTR ensures exceptional stability and control, particularly during high-speed maneuvers.\n
+    Originally priced around $1.5 million, the Mercedes CLR GTR is considered one of the most exclusive and prestigious racing cars ever produced.\n
+    Its limited production run of just five units adds to its rarity, making it highly sought after by racing enthusiasts and collectors worldwide.\n
+    .\n
+    .\n
+    .\n
+    .\n
+    .\n
+    #funny #viral #fyp #humour #memes #viral #daily` ,
+    'memes': `\nFOLLOW FOR DAILY CONTENT🎉 \nROAD TO 1K📈\n No problem! Here’s the information about the Mercedes CLR GTR:\n
+    The Mercedes CLR GTR is a remarkable racing car celebrated for its outstanding performance and sleek design. Powered by a potent 6.0-liter V12 engine, it delivers over 600 horsepower.\n
+    Acceleration from 0 to 100 km/h takes approximately 3.7 seconds, with a remarkable top speed surpassing 320 km/h.\n
+    Incorporating advanced aerodynamic features and cutting-edge stability technologies, the CLR GTR ensures exceptional stability and control, particularly during high-speed maneuvers.\n
+    Originally priced around $1.5 million, the Mercedes CLR GTR is considered one of the most exclusive and prestigious racing cars ever produced.\n
+    Its limited production run of just five units adds to its rarity, making it highly sought after by racing enthusiasts and collectors worldwide.\n
+    .\n
+    .\n
+    .\n
+    .\n
+    .\n
+    #funny #viral #fyp #humour #memes #viral #daily`
 }
 
-const get_media = async (genre, quantity, excludeIds =""/*Content to avoid*/ )=>{
+const get_media = async (genre, quantity,needMedia=true, excludeIds =""/*Content to avoid*/ )=>{
 
     try{
-    var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}`,{excludeIds});   
+    var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}&needMedia=${needMedia}`,{excludeIds});   
    //console.log(typeof response.data.media[0]._id);
    console.log(response.data.message)
    return response.data.media;

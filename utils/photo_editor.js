@@ -122,6 +122,13 @@ const fix_reddit_photo_url = async(bad_url, title) =>{
 
 }
 
+const cloudinary_video_upload = async(url,title)=>{
+  const video_upload = await cloudinary.uploader.upload(url,{resource_type:'video',public_id: title})
+
+  const new_url = cloudinary.url(title,{resource_type:'video'})
+  console.log(new_url)
+}
+
 const fix_reddit_video_url = async(bad_url,title) =>{
 
   try{
@@ -130,14 +137,14 @@ const fix_reddit_video_url = async(bad_url,title) =>{
    const audio_id = `${title}_audio`
 
  
-
+    const encodedText = encodeURIComponent(title)
     const video_upload = await cloudinary.uploader.upload(bad_url,
       { resource_type: 'video',
         public_id: title})
 
     const new_url = cloudinary.url(video_upload.public_id,{
       resource_type: 'video',
-      transformation :[{ width:1080, height:1080, crop: 'fill' }]
+      transformation :[{ width:1080, height:1080, crop: 'fill'}]
     })
     
     const audio_upload = await cloudinary.uploader.upload(audio,{
@@ -151,13 +158,15 @@ const fix_reddit_video_url = async(bad_url,title) =>{
     const mergedVideoUrl = cloudinary.url(video_upload.public_id, {
 
       resource_type: 'video',
-      
+      // y: "h/2", start_offset: "0", end_offset: "4", color: "white", background: "rgba:0,0,0,0.5
       transformation: [
       
       { overlay: `audio:${audio_id}` },
+      { flags: "layer_apply"},
+      // {color: "#000000", overlay: {font_family: "arial", font_size: 300, text_align: "left", text: "Hello"}},
       
-      { flags: "layer_apply" }
-      
+      // { flags: "layer_apply"  ,gravity: "south", y: 10},
+    
       ]
       
       });
@@ -183,4 +192,4 @@ const fix_reddit_video_url = async(bad_url,title) =>{
   }
 
 }
-module.exports =  {createInstagramImage, edit_image, fix_reddit_video_url,fix_reddit_photo_url};
+module.exports =  {createInstagramImage, edit_image, fix_reddit_video_url,fix_reddit_photo_url,cloudinary_video_upload};
