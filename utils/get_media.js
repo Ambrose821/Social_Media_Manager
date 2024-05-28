@@ -36,7 +36,7 @@ const captions = {
 const get_media = async (genre, quantity,needMedia=true, excludeIds =""/*Content to avoid*/ )=>{
 
     try{
-    var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}&needMedia=${needMedia}`,{excludeIds});   
+    var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}`,{excludeIds});   
    //console.log(typeof response.data.media[0]._id);
    console.log(response.data.message)
    return response.data.media;
