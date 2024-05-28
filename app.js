@@ -109,7 +109,7 @@ const add_insta_account = require('./utils/add_account');
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
-const job1 = schedule.scheduleJob('01 13 * * *',   ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "memes", 5)})
+const job1 = schedule.scheduleJob('29 14 * * *',   ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "memes", 5)})
 const job2 = schedule.scheduleJob('01 5 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "cringe", 5)})
 
 const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
