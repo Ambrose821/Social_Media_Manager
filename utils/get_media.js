@@ -79,6 +79,9 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
             break;
         case "memes":
             underCaption = captions.memes
+            break;
+        case "cringe":
+            underCaption = captions.memes
     }
     
         
@@ -94,7 +97,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
       
         if(!post.video_url && post.img_url){
            var image_url;
-           if(genre === 'memes'){
+           if(genre === 'memes' || genre === 'cringe'){
             image_url = await fix_reddit_photo_url(post.img_url,post._id);
             console.log("memes photo")
 
