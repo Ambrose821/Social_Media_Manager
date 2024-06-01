@@ -5,16 +5,14 @@ const schedule = require('node-schedule')
 
 const connectDB = require('./config/connectDb');
 
+const configUrl = require('./config/configUrl')
+
 
 //Allows use of process.env.{variable_name}
 dotenv.config({path: './config/config.env'}
 )
 
 
-
-
-//port
-const PORT = process.env.PORT || 5000;
 
 //if you need a new 60 day API instagram graph access key
 //const sixty_graph_key = require('./config/insta_access')
@@ -99,13 +97,30 @@ const {createInstagramImage, edit_image, fix_reddit_video_url,cloudinary_video_u
 //get_insta_creation_id_status(creation_id)
 const app = new express()
 
+// BASE_URL = "Hello world"
+// Determine the base URL based on environment variables
+const PORT = process.env.PORT || 5000;
+const HOST = process.env.HOST || 'localhost';
+const PROTOCOL = process.env.PROTOCOL || 'http';
+const BASE_URL = `${PROTOCOL}://${HOST}:${PORT}`;
+
+// Set the base URL in the configuration module
+configUrl.setBaseUrl(BASE_URL);
+
+//console.log("BASE" +configUrl.getBaseUrl())
+
+app.use(express.urlencoded({extended:false}))
+app.use(express.json);
+
+
+
 //connect to Mongo
 connectDB();
 
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
-get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
+//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
@@ -130,6 +145,9 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 
 //const urls = fix_reddit_video_url("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback","hello world")
 
+const {fixRedditVideoUrl} = require('./utils/media_processing');
+
+fixRedditVideoUrl('https://v.redd.it/ptwhrfhqvdxc1/DASH_480.mp4?source=fallback', 'ur_code_sucks')
 //cloudinary_video_upload('https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',"hello")
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
@@ -137,9 +155,6 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 // Serve static files from the 'public' directory
 app.use(express.static('public'));
 
-
-app.use(express.urlencoded({extended:false}))
-app.use(express.json);
 
 app.listen(process.env.PORT,console.log(`Server running on ${process.env.PORT}`))
 
