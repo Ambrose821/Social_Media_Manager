@@ -33,10 +33,10 @@ const captions = {
     #funny #viral #fyp #humour #memes #viral #daily`
 }
 
-const get_media = async (genre, quantity,needMedia=true, excludeIds =""/*Content to avoid*/ )=>{
+const get_media = async (genre, quantity, excludeIds =""/*Content to avoid*/ )=>{
 
     try{
-    var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}`,{excludeIds});   
+    var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}`,{excludeIds: excludeIds}, {headers: { 'Content-Type': 'application/json'} } );   
    //console.log(typeof response.data.media[0]._id);
    console.log(response.data.message)
    return response.data.media;

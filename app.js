@@ -104,7 +104,7 @@ connectDB();
 
 const add_insta_account = require('./utils/add_account');
 
-//add_insta_account(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"Shuffle Media")
+//add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
 get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
 try{
 
@@ -141,6 +141,6 @@ app.use(express.static('public'));
 app.use(express.urlencoded({extended:false}))
 app.use(express.json);
 
-app.listen(PORT,console.log(`Server running on ${process.env.PORT}`))
+app.listen(process.env.PORT,console.log(`Server running on ${process.env.PORT}`))
 
 
