@@ -153,7 +153,7 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 //daily1()
 const {fixRedditVideoUrl} = require('./utils/media_processing');
 
-//fixRedditVideoUrl('https://v.redd.it/ptwhrfhqvdxc1/DASH_480.mp4?source=fallback', 'ur_code_sucks')
+fixRedditVideoUrl('https://v.redd.it/ptwhrfhqvdxc1/DASH_480.mp4?source=fallback', 'ur_code_sucks')
 //cloudinary_video_upload('https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',"hello")
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
