@@ -55,7 +55,7 @@ const fixRedditVideoUrl = async (bad_url,title) =>{
         // await deleteFile(audioPath)
         
         const public_ret_path =`/videos/${title}_merged.mp4`
-        console.log("Video Path: "+configUrl.getBaseUrl()+public_ret_path)
+        console.log("Video Path: "+'https://socialmediamanager-production.up.railway.app'+public_ret_path)
         return public_ret_path
 
     }catch(err){
