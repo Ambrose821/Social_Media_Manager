@@ -38,7 +38,7 @@ const daily1 = async() =>{
  console.log(caption)
 console.log(encodedCaption)
 insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/daily1.mp4',caption,"reel")
-}
+}                                           
 //daily1();
 //qsetInterval(daily1,1000*60*60*24);
 
@@ -100,13 +100,13 @@ const app = new express()
 
 // BASE_URL = "Hello world"
 // Determine the base URL based on environment variables
-const PORT = process.env.PORT || 5000;
-const HOST = process.env.HOST || 'localhost';
-const PROTOCOL = process.env.PROTOCOL || 'http';
-const BASE_URL = `${PROTOCOL}://${HOST}:${PORT}`;
+// const PORT = process.env.PORT || 5000;
+// const HOST = process.env.HOST || 'localhost';
+// const PROTOCOL = process.env.PROTOCOL || 'http';
+// const BASE_URL = `${PROTOCOL}://${HOST}:${PORT}`;
 
-// Set the base URL in the configuration module
-configUrl.setBaseUrl(BASE_URL);
+// // Set the base URL in the configuration module
+// configUrl.setBaseUrl(BASE_URL);
 
 //console.log("BASE" +configUrl.getBaseUrl())
 
@@ -126,7 +126,7 @@ connectDB();
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
-get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
+//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
@@ -150,10 +150,10 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 
 
 //const urls = fix_reddit_video_url("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback","hello world")
-daily1()
+//daily1()
 const {fixRedditVideoUrl} = require('./utils/media_processing');
 
-fixRedditVideoUrl('https://v.redd.it/ptwhrfhqvdxc1/DASH_480.mp4?source=fallback', 'ur_code_sucks')
+//fixRedditVideoUrl('https://v.redd.it/ptwhrfhqvdxc1/DASH_480.mp4?source=fallback', 'ur_code_sucks')
 //cloudinary_video_upload('https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',"hello")
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)
