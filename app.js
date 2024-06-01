@@ -144,7 +144,7 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 
 
 //const urls = fix_reddit_video_url("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback","hello world")
-
+daily1()
 const {fixRedditVideoUrl} = require('./utils/media_processing');
 
 fixRedditVideoUrl('https://v.redd.it/ptwhrfhqvdxc1/DASH_480.mp4?source=fallback', 'ur_code_sucks')
