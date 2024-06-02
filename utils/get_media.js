@@ -121,6 +121,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
                 }`)
                 const fixedUrl = await fixRedditVideoUrl(post.video_url,String(post._id));
                 video_url = fixedUrl.video_url //Reddit urls are missing sound and not compatible with meta grpah api by default. this function fixes that.
+                console.log("Tryna post video url ; "+ video_url)
                 local_path = fixedUrl.local_path
                 console.log("memes video or cringe : " + video_url)
 
@@ -156,10 +157,10 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
             console.log("i = : " +i)
            await insta_post_reel(insta_id,"","","",creation_id_to_post)
 
-           if(local_delete_list[i]){
-            await deleteFile(local_delete_list[i])
+        //    if(local_delete_list[i]){
+        //     await deleteFile(local_delete_list[i])
             
-           }
+        //    }
 
             
         }
