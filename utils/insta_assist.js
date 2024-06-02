@@ -59,8 +59,11 @@ const get_insta_creation_id_status = async (creation_id) => {
 const getStatusOfUploadContainer = async (accessToken, igContainerId) => {
     const response = await axios.get(
       `https://graph.facebook.com/v19.0/${igContainerId}`,
-      { params: { access_token: accessToken, fields: 'status_code' } }
+      { params: { access_token: accessToken, fields: 'status_code,error' } }
     );
+    if(response.data.error){
+      console.log(response.data.error)
+    }
         console.log(response.data.status_code)
     return response.data.status_code;
   };
