@@ -1,6 +1,7 @@
 const axios = require('axios')
 const InstaAccount = require('../models/InstaAccount')
 const {edit_image,fix_reddit_video_url,fix_reddit_photo_url} = require("./photo_editor")
+const {fixRedditVideoUrl, deleteFile} = require('./media_processing');
 
 
 
@@ -38,7 +39,7 @@ const get_media = async (genre, quantity, excludeIds =""/*Content to avoid*/ )=>
     try{
     var response = await axios.post(`https://media-news-api-production.up.railway.app/content_get?&genre=${genre}&quantity=${quantity}`,{excludeIds: excludeIds}, {headers: { 'Content-Type': 'application/json'} } );   
    //console.log(typeof response.data.media[0]._id);
-   console.log(response.data.message)
+   //console.log(response.data.message)
    return response.data.media;
 
     }
@@ -57,11 +58,13 @@ const get_media = async (genre, quantity, excludeIds =""/*Content to avoid*/ )=>
 //TODO: Edit images depending on genre. For news and sports it makes sense to add caption to image. does not work for memes or culture as there is already text
 const get_and_insta_post = async(insta_id,genre,quantity) =>{
 
+
     try{
+
 
         var this_account = await InstaAccount.findOne({instagram_id:insta_id});
 
-        console.log(this_account.content_posted);
+        //console.log(this_account.content_posted);
         var excludeIds = this_account.content_posted;
         
 
@@ -70,6 +73,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
         return console.error("Error Identifying account: " + err);
     }
     
+    let local_delete_list = []; //Some videos need to be download to the server before being posted. We need to save server space by deleting them once finished
     
     let container_queue = []; //Currently just used for reels, No need to check status of pictures as it is very fast and we dont want to waste requests.
     let underCaption= "";
@@ -86,7 +90,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
     
         
     const media_arr = await get_media(genre,quantity,excludeIds);
-    console.log(media_arr)
+    //console.log(media_arr)
     
 
     for(let i =0; i < quantity; i++){
@@ -111,9 +115,17 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
            continue;
         }else if(post.video_url){
             var video_url;
-            if(genre === 'memes'){
-                video_url = await fix_reddit_video_url(post.video_url,post.title._id); //Reddit urls are missing sound and not compatible with meta grpah api by default. this function fixes that.
-                console.log("memes video")
+            if(genre === 'memes' || 'cringe'){
+                console.log(`Befroe Fix Reddit post.video_url ${post.video_url} and Id: ${post._id
+                    
+                }`)
+                const fixedUrl = await fixRedditVideoUrl(post.video_url,String(post._id));
+                video_url = fixedUrl.video_url //Reddit urls are missing sound and not compatible with meta grpah api by default. this function fixes that.
+                local_path = fixedUrl.local_path
+                console.log("memes video or cringe : " + video_url)
+
+                local_delete_list.push(local_path)
+
             }
             else{video_url = post.video_url}
             const creation_id_to_enqueue = await get_creation_id(insta_id,video_url,plane_caption,"reel")
@@ -142,10 +154,17 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
             creation_id_to_post = container_queue.pop()
             console.log("Dequeued: " + creation_id_to_post)
             console.log("i = : " +i)
-            await insta_post_reel(insta_id,"","","",creation_id_to_post)
+           //await insta_post_reel(insta_id,"","","",creation_id_to_post)
+
+           if(local_delete_list[i]){
+            await deleteFile(local_delete_list[i])
+            
+           }
 
             
         }
+
+        
        
     }catch(err){
         console.error("Error posting from creationID queue");

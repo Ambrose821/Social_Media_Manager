@@ -126,7 +126,7 @@ connectDB();
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
-//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
+//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"memes",5);
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
@@ -153,7 +153,7 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 //daily1()
 const {fixRedditVideoUrl} = require('./utils/media_processing');
 
-fixRedditVideoUrl('https://v.redd.it/ptwhrfhqvdxc1/DASH_480.mp4?source=fallback', 'ur_code_sucks')
+fixRedditVideoUrl("https://v.redd.it/lkbabz4amt3d1/DASH_480.mp4?source=fallback")
 //cloudinary_video_upload('https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',"hello")
 
 //page_connect(process.env.DAILY1_FACEBOOK_ID)

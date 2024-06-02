@@ -21,7 +21,7 @@ const page_connect =  async(page_id) =>{
 
 const get_creation_id = async (insta_id, media_url,caption,content_type ="") =>{
     if(content_type == "reel"){
-      console.log("At creation Id: " +caption)
+   
       var url = `https://graph.facebook.com/v19.0/${encodeURIComponent(insta_id)}/media?media_type=REELS&video_url=${encodeURIComponent(media_url)}&caption=${encodeURIComponent(caption)}&access_token=${encodeURIComponent(process.env.CURRENT_LONG_TOKEN)}`;
 
 
@@ -31,7 +31,7 @@ const get_creation_id = async (insta_id, media_url,caption,content_type ="") =>{
     else{
         var url =`https://graph.facebook.com/v19.0/${insta_id}/media?image_url=${media_url}&caption=${caption}&access_token=${process.env.CURRENT_LONG_TOKEN}`
     }
-    console.log("At creation Id: " +caption)
+   
     const response = await axios.post(url)
     //console.log(response.data)
     const creation_id = response.data.id;
@@ -150,8 +150,7 @@ const generic_insta_post = async(insta_id,creation_id) =>{
    }
   })  
 }
-
-    //Not currently userd. using get_creation_id instead
+ //Not currently userd. using get_creation_id instead
 const uploadReelsToContainer = async (
     accessToken,
     instagramAccountId,
@@ -169,7 +168,7 @@ const uploadReelsToContainer = async (
         cover_url: coverUrl,
       }
     );
-    console.log
+   
     return response.data;
   };
 //url: https://politicsnigeria.com/wp-content/uploads/2024/02/philip-shaibu.jpg

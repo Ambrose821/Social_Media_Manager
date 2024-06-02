@@ -28,6 +28,7 @@ const deleteFile = (path) => {
             if(err){
                 reject(err)
             }else{
+                console.log(path + " Deleted")
                 resolve()
             }
         })
@@ -45,18 +46,20 @@ const fixRedditVideoUrl = async (bad_url,title) =>{
 
         await downloadFile(bad_url,videoPath);
         const audio = bad_url.replace(/DASH_\d+/, 'DASH_AUDIO_128')
+        console.log("Attempting to download Audio" + audio)
         await downloadFile(audio,audioPath)
 
-        ffmpeg(videoPath).addInput(audioPath).outputOptions('-c:v copy').outputOptions('-c:a aac').save(outputPath).on('end', () =>{console.log("Merged video saved at " +outputPath)}).on('error',(err) =>{
+        ffmpeg(videoPath).addInput(audioPath).outputOptions('-c:v copy').outputOptions('-c:a aac').save(outputPath).on('end', async () =>{console.log("Merged video saved at " +outputPath) 
+      await deleteFile(videoPath)
+        await deleteFile(audioPath)
+        }).on('error',(err) =>{
             console.error('Error merging video and audio',err)
         })
 
-        //await deleteFile(videoPath)
-        // await deleteFile(audioPath)
-        
-        const public_ret_path =`/videos/${title}_merged.mp4`
-        console.log("Video Path: "+'https://socialmediamanager-production.up.railway.app'+public_ret_path)
-        return public_ret_path
+        const local_path =`/videos/${title}_merged.mp4`
+        const video_url = 'https://socialmediamanager-production.up.railway.app'+ local_path;
+        console.log("Video Path: "+'https://socialmediamanager-production.up.railway.app'+ local_path)
+        return {video_url: video_url, local_path: outputPath}
 
     }catch(err){
         console.error('Error with ffmpeg fixing reddit_url: ' + err)
