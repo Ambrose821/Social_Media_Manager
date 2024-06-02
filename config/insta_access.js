@@ -7,13 +7,14 @@ const sixty_graph_key = async (short_token) => {
     const url = `https://graph.facebook.com/v19.0/oauth/access_token?grant_type=fb_exchange_token&client_id=${process.env.INSTA_APP_ID}&client_secret=${process.env.INSTA_APP_SECRET}&fb_exchange_token=${short_token}`
     try{
        
-        const response = await axios.get(url)
+      var  response = await axios.get(url)
         
     console.log(response.data.access_token)
     return({token: response.data.access_token, timer: response.data.expires_in})
     
     }
     catch(err){
+        console.log(JSON.stringify(response))
         console.log(err)
     }
 }

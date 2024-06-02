@@ -115,7 +115,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
            continue;
         }else if(post.video_url){
             var video_url;
-            if(genre === 'memes' || 'cringe'){
+            if(genre === 'memes' || genre === 'cringe'){
                 console.log(`Befroe Fix Reddit post.video_url ${post.video_url} and Id: ${post._id
 
                 }`)

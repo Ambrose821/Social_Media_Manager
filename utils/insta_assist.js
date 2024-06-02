@@ -59,11 +59,9 @@ const get_insta_creation_id_status = async (creation_id) => {
 const getStatusOfUploadContainer = async (accessToken, igContainerId) => {
     const response = await axios.get(
       `https://graph.facebook.com/v19.0/${igContainerId}`,
-      { params: { access_token: accessToken, fields: 'status_code,error' } }
+      { params: { access_token: accessToken, fields: 'status_code' } }
     );
-    if(response.data.error){
-      console.log(response.data.error)
-    }
+   
         console.log(response.data.status_code)
     return response.data.status_code;
   };
@@ -89,8 +87,8 @@ const post_insta_photo = async(insta_id, media_url,caption,content_type) =>{
 //TODO Need better logic for while loop becaue we use too many requests
 const insta_post_reel = async(insta_id, media_url="", captions="", content_type="",creation_id ="") =>{
 
-
-  try{
+try{
+  
   if(!creation_id){
     if(!insta_id || !media_url || !captions || !content_type){
       return(console.log("Incorrect Argument option. \n If you do not have creation id you must have all other arguments.\n Instagram ID is required in every case"))
@@ -124,16 +122,15 @@ const insta_post_reel = async(insta_id, media_url="", captions="", content_type=
     
         
         await new Promise((p) =>setTimeout(p,10000))
+    }}catch(Err){
+      console.log(Err)
     }
     
     
     
 
     
-    }catch(err){
 
-      console.log("Error Posting Reel +:  "+ err)
-    }
 }
 
 
