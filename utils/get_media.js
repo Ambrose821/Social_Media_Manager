@@ -153,7 +153,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
             creation_id_to_post = container_queue.pop()
             console.log("Dequeued: " + creation_id_to_post)
             console.log("i = : " +i)
-         //  await insta_post_reel(insta_id,"","","",creation_id_to_post)
+         await insta_post_reel(insta_id,"","","",creation_id_to_post)
          
            if(local_delete_list[i]){
             await deleteFile(local_delete_list[i])

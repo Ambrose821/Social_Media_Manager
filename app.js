@@ -126,7 +126,7 @@ connectDB();
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
-get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"memes",5);
+// get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"memes",5);
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
@@ -153,12 +153,12 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 //daily1()
 const {fixRedditVideoUrl, fixRedditVideoUrlBad} = require('./utils/media_processing');
 
-const func1 = async() =>{
-    const obj =  await fixRedditVideoUrl("https://v.redd.it/lkbabz4amt3d1/DASH_480.mp4?source=fallback","title")
-    
-console.log(JSON.stringify(obj))
-}
-func1()
+// const func1 = async() =>{
+//     const obj =  await fixRedditVideoUrl("https://v.redd.it/lkbabz4amt3d1/DASH_480.mp4?source=fallback","title")
+
+// console.log(JSON.stringify(obj))
+// }
+// func1()
 
 
 
