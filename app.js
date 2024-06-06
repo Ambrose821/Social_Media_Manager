@@ -126,7 +126,7 @@ connectDB();
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
-get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
+get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"memes",5);
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
@@ -146,20 +146,27 @@ const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
 
 // !!!!!!!!!!!! TODO SOME PICTURES RESULT IN FAILED EDIT WHICH RESULTS IN A FAILED POST. sPECIFICALLY WITH SPORTS I0 SO FAR
 
-insta_post_reel(process.env.DAILY1_INSTA_ID,'https://socialmediamanager-production.up.railway.app/videos/665a857630de034ccb94d319_merged.mp4',"hello world", "reel")
+//insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://socialmediamanager-production.up.railway.app/videos/665a857630de034ccb94d319_merged.mp4',"hello world", "reel")
 
 
 //const urls = fix_reddit_video_url("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback","hello world")
 //daily1()
-const {fixRedditVideoUrl} = require('./utils/media_processing');
+const {fixRedditVideoUrl, fixRedditVideoUrlBad} = require('./utils/media_processing');
 
-//fixRedditVideoUrl("https://v.redd.it/lkbabz4amt3d1/DASH_480.mp4?source=fallback")
-//cloudinary_video_upload('https://img-9gag-fun.9cache.com/photo/aBdq5X1_460sv.mp4',"hello")
+const func1 = async() =>{
+    const obj =  await fixRedditVideoUrl("https://v.redd.it/lkbabz4amt3d1/DASH_480.mp4?source=fallback","title")
+    
+console.log(JSON.stringify(obj))
+}
+func1()
 
-//page_connect(process.env.DAILY1_FACEBOOK_ID)
-//getStatusOfUploadContainer("18247169761247540")
+
+
+
 
 
 app.listen(process.env.PORT,console.log(`Server running on ${process.env.PORT}`))
 
 
+//https://v.redd.it/lkbabz4amt3d1/DASH_480.mp4?source=fallback    <<<<<<------------------- This video has no audio
+//https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback    <<<<<<------------------- This video has working audio

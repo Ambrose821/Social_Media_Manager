@@ -123,7 +123,7 @@ try{
         
         await new Promise((p) =>setTimeout(p,10000))
     }}catch(Err){
-      console.log(Err)
+      console.log("Error Posting Reel: " + Err)
     }
     
     
