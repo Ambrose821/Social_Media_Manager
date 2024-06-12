@@ -1,7 +1,7 @@
 const axios = require('axios')
 const InstaAccount = require('../models/InstaAccount')
 const {edit_image,fix_reddit_video_url,fix_reddit_photo_url} = require("./photo_editor")
-const {fixRedditVideoUrl, deleteFile} = require('./media_processing');
+const {fixRedditVideoUrl, deleteFile, fixRedditVideoUrlBad} = require('./media_processing');
 
 
 
@@ -73,7 +73,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
         return console.error("Error Identifying account: " + err);
     }
     
-    let local_delete_list = []; //Some videos need to be download to the server before being posted. We need to save server space by deleting them once finished
+    let video_processing = []; //Some videos need to be download to the server before being posted. We need to save server space by deleting them once finished
     
     let container_queue = []; //Currently just used for reels, No need to check status of pictures as it is very fast and we dont want to waste requests.
     let underCaption= "";
@@ -91,7 +91,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
         
     const media_arr = await get_media(genre,quantity,excludeIds);
     //console.log(media_arr)
-    
+  
 
     for(let i =0; i < quantity; i++){
     try{
@@ -123,7 +123,7 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
                 local_path = fixedUrl.local_path
                 console.log("memes video or cringe : " + video_url)
 
-                local_delete_list.push(local_path)
+                video_processing.push(local_path)
 
             }
             else{video_url = post.video_url}
@@ -153,10 +153,10 @@ const get_and_insta_post = async(insta_id,genre,quantity) =>{
             creation_id_to_post = container_queue.pop()
             console.log("Dequeued: " + creation_id_to_post)
             console.log("i = : " +i)
-         await insta_post_reel(insta_id,"","","",creation_id_to_post)
+         //await insta_post_reel(insta_id,"","","",creation_id_to_post)
          
-           if(local_delete_list[i]){
-            await deleteFile(local_delete_list[i])
+           if(video_processing[i]){
+            await deleteFile(video_processing[i])
             
            }
 
