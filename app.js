@@ -138,12 +138,12 @@ const job2 = schedule.scheduleJob('01 17 * * *', ()=>{ get_and_insta_post(proces
 //const job2 = schedule.scheduleJob('01 5 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "cringe", 5)})
 
 const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
-*/
+
 }catch(err){
 
     console.error("Error with some setIntervals: " +err + "\n JSON: "+ JSON.stringify(err));
 }
-
+*/
 // !!!!!!!!!!!! TODO SOME PICTURES RESULT IN FAILED EDIT WHICH RESULTS IN A FAILED POST. sPECIFICALLY WITH SPORTS I0 SO FAR
 
 //insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://socialmediamanager-production.up.railway.app/videos/665a857630de034ccb94d319_merged.mp4',"hello world", "reel")
