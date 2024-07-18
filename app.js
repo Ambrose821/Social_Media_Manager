@@ -126,8 +126,8 @@ connectDB();
 const add_insta_account = require('./utils/add_account');
 
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
-//get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
-/*try{
+get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
+try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
 
@@ -137,13 +137,12 @@ const job2 = schedule.scheduleJob('01 17 * * *', ()=>{ get_and_insta_post(proces
 //const job1 = schedule.scheduleJob('29 14 * * *',   ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "memes", 5)}) paused cuz of cloudinary limits, switch to ffmpeg then restart reddit
 //const job2 = schedule.scheduleJob('01 5 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "cringe", 5)})
 
-const dailyJob = schedule.scheduleJob('01 12 * * *',()=>{daily1()})
+
 
 }catch(err){
 
     console.error("Error with some setIntervals: " +err + "\n JSON: "+ JSON.stringify(err));
 }
-*/
 // !!!!!!!!!!!! TODO SOME PICTURES RESULT IN FAILED EDIT WHICH RESULTS IN A FAILED POST. sPECIFICALLY WITH SPORTS I0 SO FAR
 
 //insta_post_reel(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,'https://socialmediamanager-production.up.railway.app/videos/665a857630de034ccb94d319_merged.mp4',"hello world", "reel")
