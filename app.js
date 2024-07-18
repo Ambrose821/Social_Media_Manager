@@ -6,7 +6,7 @@ const schedule = require('node-schedule')
 const connectDB = require('./config/connectDb');
 
 const configUrl = require('./config/configUrl')
-
+//
 
 //Allows use of process.env.{variable_name}
 dotenv.config({path: './config/config.env'}
