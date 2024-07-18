@@ -128,7 +128,7 @@ const add_insta_account = require('./utils/add_account');
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
 //get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
 
-get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",5);
+//get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",5);
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
@@ -136,7 +136,7 @@ const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.
 const job1 = schedule.scheduleJob('01 12 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
 
 const job2 = schedule.scheduleJob('01 17 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
-
+/*
 const job3 = schedule.scheduleJob('01 11 * * *', ()=>{ get_and_insta_post(process.env.DAILY1_INSTA_ID, "culture", 5)})
 
 const job4 = schedule.scheduleJob('01 15 * * *', ()=>{ get_and_insta_post(process.env.DAILY1_INSTA_ID, "culture", 5)})
@@ -145,7 +145,7 @@ const job5 = schedule.scheduleJob('01 20 * * *', ()=>{ get_and_insta_post(proces
 //const job1 = schedule.scheduleJob('29 14 * * *',   ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "memes", 5)}) paused cuz of cloudinary limits, switch to ffmpeg then restart reddit
 //const job2 = schedule.scheduleJob('01 5 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "cringe", 5)})
 
-
+*/
 
 }catch(err){
 
