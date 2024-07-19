@@ -128,7 +128,7 @@ const add_insta_account = require('./utils/add_account');
 //add_insta_account(process.env.DAILY1_INSTA_ID,"Daily1")
 //get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID,"culture",5);
 
-//get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",5);
+get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",5);
 try{
 
 const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
