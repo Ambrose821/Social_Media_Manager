@@ -131,11 +131,11 @@ const add_insta_account = require('./utils/add_account');
 get_and_insta_post(process.env.DAILY1_INSTA_ID,"culture",5);
 try{
 
-const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
+//const job = schedule.scheduleJob('01 9 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
 
-const job1 = schedule.scheduleJob('01 12 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
+//const job1 = schedule.scheduleJob('01 12 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
 
-const job2 = schedule.scheduleJob('01 17 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
+//const job2 = schedule.scheduleJob('01 17 * * *', ()=>{ get_and_insta_post(process.env.SHUFFLE_MEDIA_INSTAGRAM_ID, "culture", 5)})
 /*
 const job3 = schedule.scheduleJob('01 11 * * *', ()=>{ get_and_insta_post(process.env.DAILY1_INSTA_ID, "culture", 5)})
 
