@@ -12,7 +12,7 @@ const configUrl = require('./config/configUrl')
 dotenv.config({path: './config/config.env'}
 )
 
-//test
+
 
 //if you need a new 60 day API instagram graph access key
 const sixty_graph_key = require('./config/insta_access')
