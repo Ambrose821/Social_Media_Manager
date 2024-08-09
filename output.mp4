@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>CNN Video News</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <script src="/js/lib/components/omniture.js"></script>
+    <script src="/js/lib/components/common.js"></script>
+    <script>
+        /* Declare the FAVE settings specific to this view */
+        FAVE.settings.server.customer = 'cnn';
+        FAVE.settings.server.edition = 'domestic';
+        FAVE.settings.server.environment = 'prod\';
+        FAVE.settings.mediaPlayer = 'top';
+
+        if (typeof '' === 'string' && ''.length > 0 &&
+            '' !== 'dev' && '' !== 'prod') {
+            FAVE.settings.freewheel = FAVE.settings.freewheel || {};
+            FAVE.settings.freewheel.serverUrl = '';
+        }
+
+        if ('' === 'true') {
+            FAVE.settings.player = FAVE.settings.player || {};
+            FAVE.settings.player.vr = FAVE.settings.player.vr || {};
+            FAVE.settings.player.vr.grabCursorTimeout = 100;
+        }
+
+        if (typeof '' === 'string' && ''.length > 0) {
+            FAVE.settings.ads = FAVE.settings.ads || {};
+            FAVE.settings.ads.policies = FAVE.settings.ads.policies || {};
+            FAVE.settings.ads.policies.consent = FAVE.settings.ads.policies.consent || {};
+            FAVE.settings.ads.policies.consent.ccpaConsentString = FAVE.settings.ads.policies.consent.ccpaConsentString || {};
+            FAVE.settings.ads.policies.consent.ccpaConsentString.defaultValue = '';
+        }
+    </script>
+
+        <script src="https://registry.api.cnn.io/bundles/fave/latest-4.x/js"></script>
+
+        <script>
+            window.CNN = window.CNN || {};
+            window.CNN.omniture = window.CNN.omniture || {};
+        </script>
+            <script src="//lightning.cnn.com/launch/7be62238e4c3/97fa00444124/launch-2fd9d1b556e2-staging.min.js"></script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="video" class="fave-responsive-video"></div>
+    <script>
+        var playerConfigs = {
+                adsection: '' || COMMON.getAdsection('domestic'),
+                autostart: COMMON.getAutostart(''),
+                markupId: 'video',
+                player: {
+                    // Disable fallback to MP4 file when in a background browser tab
+                    useMp4ForHiddenPages: false
+                },
+                server: {
+                    medium: {
+                        enabled: true
+                    }
+                },
+                video: 'med093c6c63e8f8cd0eb6edd1b1d12037e53811d30',
+                stellarUri: 'cms.cnn.com/_components/video-resource/instances/clyzrxlng00003b6khg8ndmf0@published',
+                stellarUdk: 'rn0723c0'
+            };
+
+        if ('' === 'true') {
+            playerConfigs.player.autoplay = {
+                muted: {
+                    enabled: true
+                }
+            };
+        }
+        if ('' === 'true') {
+            playerConfigs.isVr = true;
+            playerConfigs.player.maxBitrate = 'Infinity';
+            playerConfigs.theoplayer = playerConfigs.theoplayer || {};
+            playerConfigs.theoplayer.initialRendition = 'high';
+        }
+        if ('' === 'true') {
+            playerConfigs.isLive = true;
+            playerConfigs.player.poster = playerConfigs.player.poster || {};
+            playerConfigs.player.poster.big = 'bp';
+            playerConfigs.player.poster.small = 'bp';
+        }
+        FAVE.player({
+            configs: playerConfigs
+        });
+    </script>
+</body>
+
+</html>

@@ -162,7 +162,7 @@ const {fixRedditVideoUrl, fixRedditVideoUrlBad,fixRedditVideoUrll,downloadFile} 
  const func1 = async() =>{
   
         
-    var obj =  await fixRedditVideoUrl("https://v.redd.it/lkbabz4amt3d1/DASH_480.mp4?source=fallback","title")
+    var obj =  await fixRedditVideoUrll("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback ","title")
      console.log(JSON.stringify(obj))}
    
 
