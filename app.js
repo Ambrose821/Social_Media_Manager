@@ -159,18 +159,22 @@ const job5 = schedule.scheduleJob('01 20 * * *', ()=>{ get_and_insta_post(proces
 //daily1()
 const {fixRedditVideoUrl, fixRedditVideoUrlBad,fixRedditVideoUrll,downloadFile} = require('./utils/media_processing');
 
- const func1 = async() =>{
+ const func1 = async(identifier) =>{
   
         
-    var obj =  await fixRedditVideoUrll("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback ","title")
+    var obj =  await fixRedditVideoUrll("https://v.redd.it/m98rudox5cxc1/DASH_720.mp4?source=fallback ","title"+identifier)
      console.log(JSON.stringify(obj))}
    
 
 
  
-  func1()
 
 
+
+
+for(var i=0; i< 25; i++){
+  func1(i)
+}
 
 
 

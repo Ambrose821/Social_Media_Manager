@@ -90,11 +90,12 @@ const fixRedditVideoUrll = async (bad_url,title) =>{
         
        ffmpeg().addInput(bad_url)
        .addInput(audio)
+       .output(outputPath)
        .on('error', async function(err){
         
         if(err.message.includes('343616999')){ //NOTE THAT .contains() should work when searching for properties in objects while .includes() is for strings
         console.log("No corresponding Audio for this video, returning no sound video")
-        await downloadFile(bad_url,outputPath);
+         //downloadFile(bad_url,outputPath);
         local_path = `/videos/${title}_merged.mp4`
          video_url = 'https://socialmediamanager-production.up.railway.app' + local_path;
         return{video_url: video_url, local_path:outputPath}
@@ -107,7 +108,7 @@ const fixRedditVideoUrll = async (bad_url,title) =>{
         local_path = `/videos/${title}_merged.mp4`
         video_url = 'https://socialmediamanager-production.up.railway.app' + local_path;
        
-    }).output(outputPath)
+    })
        .run()
 
       return{video_url: video_url, local_path:outputPath}
@@ -127,9 +128,10 @@ const fixRedditVideoUrl = async(bad_url,title) =>{
         var outputPath = `./public/videos/${title}_merged.mp4`;
         ffmpeg().addInput(bad_url)
         .addInput(audio)
+        .output(outputPath)
         .on('error',async function(err){
             if(err.message.includes('343616999')){
-                await downloadFile(bad_url,outputPath)
+                //await downloadFile(bad_url,outputPath)
                 console.log("fixRedditUrl: no corresponding Audio for this video")
                 var local_path = `/videos/${title}_merged.mp4`
                 var video_url = 'https://socialmediamanager-production.up.railway.app' + local_path;
@@ -144,7 +146,7 @@ const fixRedditVideoUrl = async(bad_url,title) =>{
             var video_url = 'https://socialmediamanager-production.up.railway.app' + local_path;
             resolve({video_url: video_url, local_path: outputPath})
 
-        }).output(outputPath).run()
+        }).run()
         }catch(err){
             console.log("Somethings wrong i can feel it")
             reject("Error in fixRedditVideoUrl: "+ err)
